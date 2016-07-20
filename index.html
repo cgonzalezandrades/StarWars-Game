@@ -1,0 +1,180 @@
+<!-- Solution developed by Jasmine Li (Student in Rutgers Jan 16 - NB Class) -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Correct Color Picker</title>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk=" crossorigin="anonymous"></script>
+
+    <link href="./assets/css/reset.css" rel="stylesheet">
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet"></link>
+    <link href="./assets/css/style.css" rel="stylesheet">
+    <script src="./assets/javascript/game.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-8 options">
+            </div>
+            <div class="rpg col-md-4">Star Wars RPG !</div>
+            <div class="row">
+            
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="yourCharacter">Your Character</div>
+        </div>
+        <div class="row">
+            <div class="enemiesAvailable">Enemies Available</div>
+        </div>
+        <div class="row">
+            <div class="fightSection">Fight Section</div>
+        </div>
+        <div class="row">
+            <button class="attack">Attack</button>
+        </div>
+        <div class="row">
+            <div class="defender">Defender</div>
+        </div>
+    </div>
+
+
+
+
+
+
+    </div>
+
+
+    <script>
+        var combatant = new Array(4);
+        combatant[0] = new jedi('Obi Wan', 'obiWan.png', 120, 6, 0);
+        combatant[1] = new jedi('Luke Skywalker', 'luke.jpg', 120, 6, 0);
+        combatant[2] = new jedi('Darth Sidious', 'darthSidious.jpeg', 120, 6, 0);
+        combatant[3] = new jedi('Darth Vader', 'darthVader.jpg', 120, 6, 0);
+
+        function jedi(name, image, health, attack, counter) {
+            this.name = name;
+            this.image = image;
+            this.health = health;
+            this.attack = attack;
+            this.counter = counter;
+            this.status = 'available';
+        }
+
+
+
+
+        var string = 'Obi Wan';
+
+
+        $(document).ready(function () {
+
+            for (var i = 0; combatant.length > i; i++) {
+
+                var $fighters = $("<div/>").addClass("jedi col-md-3").html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive">' + '<span>' + combatant[i].name + '</span>');
+                console.log($fighters);
+
+                $(".options").append($fighters);
+                console.log();
+
+            }
+            
+        $(".options").on('click',function(){
+            
+          console.log($(".jedi").this); 
+            
+            
+//            if( $(".jedi").html=== combatant[0].name){
+//                combatant[0].status = 'not available'
+//                console.log("ive been clicked"); 
+//                
+//            }
+//            if(".options" === combatant[1]){
+//                combatant[0].status = 'not available'
+//                
+//            }
+//            if(".options" === combatant[2]){
+//                combatant[0].status = 'not available'
+//                
+//            }
+//            if(".options" === combatant[3]){
+//                combatant[0].status = 'not available'
+//                
+//            }
+//            
+////            console.log(combatant[0]);
+            
+            
+        })    
+
+
+
+
+
+
+
+
+
+        })
+    </script>
+
+    <!--
+    <div class="container">
+
+        <div class=" upper row">
+            <div class="col-lg-8">
+                <div class="col-md-3">
+                    <span>Obi-Wan</span>
+                    <img src="./assets/images/obiWan.png" class="img-responsive"><span>100</span>
+                </div>
+                <div class="col-md-3">
+                    <span>Luke Skywalker</span>
+                    <img src="./assets/images/luke.jpg" class="img-responsive"><span>100</span>
+                </div>
+                <div class="col-md-3">
+                    <span>Darth Sidius</span>
+                    <img src="./assets/images/darthSidious.jpeg" class="img-responsive"><span>100</span>
+                </div>
+                <div class="col-md-3">
+                    <span>Darth Vader</span>
+                    <img src="./assets/images/darthVader.jpg" class="img-responsive"><span>100</span>
+                </div>
+            </div>
+            <div class="rpg col-md-4">Star Wars RPG !</div>
+        </div>
+
+        <div class="row">
+            <div class="yourCharacter">Your Character</div>
+        </div>
+        <div class="row">
+            <div class="enemiesAvailable">Enemies Available</div>
+        </div>
+        <div class="row">
+            <div class="fightSection">Fight Section</div>
+        </div>
+        <div class="row">
+            <button class="attack">Attack</button>
+        </div>
+        <div class="row">
+            <div class="defender">Defender</div>
+        </div>
+    </div>
+
+
+ var $fighters = $("<div/>").addClass("col-md-3").html('<span>' + string + '</span><img src=./assets/images/obiWan.png class= img-responsive>' + '<span>' + string + '</span>');
+
+-->
+
+
+</body>
+
+</html>
