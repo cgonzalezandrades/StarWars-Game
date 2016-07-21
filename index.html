@@ -21,16 +21,17 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-8 options">
+            <div class="col-lg-6 fighters">
+
             </div>
-            <div class="rpg col-md-4">Star Wars RPG !</div>
+            <div class="rpg col-md-6">Star Wars RPG !</div>
             <div class="row">
-            
+
             </div>
 
         </div>
-        <div class="row">
-            <div class="yourCharacter">Your Character</div>
+        <div class="row">Your Character
+            <div class="yourCharacter"></div>
         </div>
         <div class="row">
             <div class="enemiesAvailable">Enemies Available</div>
@@ -47,13 +48,6 @@
     </div>
 
 
-
-
-
-
-    </div>
-
-
     <script>
         var combatant = new Array(4);
         combatant[0] = new jedi('Obi Wan', 'obiWan.png', 120, 6, 0);
@@ -61,68 +55,119 @@
         combatant[2] = new jedi('Darth Sidious', 'darthSidious.jpeg', 120, 6, 0);
         combatant[3] = new jedi('Darth Vader', 'darthVader.jpg', 120, 6, 0);
 
-        function jedi(name, image, health, attack, counter) {
+        var isChosen = false;
+
+        function jedi(name, image, health, attack, counter, chosen) {
             this.name = name;
             this.image = image;
             this.health = health;
             this.attack = attack;
             this.counter = counter;
             this.status = 'available';
+          
         }
 
 
 
 
-        var string = 'Obi Wan';
-
-
         $(document).ready(function () {
 
-            for (var i = 0; combatant.length > i; i++) {
+            function setCharacter() {
 
-                var $fighters = $("<div/>").addClass("jedi col-md-3").html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive">' + '<span>' + combatant[i].name + '</span>');
-                console.log($fighters);
+                $(".yourCharacters").empty();
 
-                $(".options").append($fighters);
-                console.log();
+                for (var i = 0; combatant.length > i; i++) {
 
+                    
+                    if (combatant[i].status === 'unavailable') {
+
+                        var $fighters = $("<div/>").addClass("jedi col-md-2").attr('jedi-id', i).html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive">' + '<span>' + combatant[i].health + '</span>');
+                        
+                      
+
+                        console.log($fighters);
+
+                        $(".yourCharacter").append($fighters);
+                    }
+
+                    displayJedi();
+
+
+                }
             }
-            
-        $(".options").on('click',function(){
-            
-          console.log($(".jedi").this); 
-            
-            
-//            if( $(".jedi").html=== combatant[0].name){
-//                combatant[0].status = 'not available'
-//                console.log("ive been clicked"); 
-//                
-//            }
-//            if(".options" === combatant[1]){
-//                combatant[0].status = 'not available'
-//                
-//            }
-//            if(".options" === combatant[2]){
-//                combatant[0].status = 'not available'
-//                
-//            }
-//            if(".options" === combatant[3]){
-//                combatant[0].status = 'not available'
-//                
-//            }
-//            
-////            console.log(combatant[0]);
-            
-            
-        })    
+
+            function displayJedi() {
+
+                $(".fighters").empty();
+
+                for (var i = 0; combatant.length > i; i++) {
+
+                    if (combatant[i].status === 'available') {
+
+                        var $fighters = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', i).html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive">' + '<span>' + combatant[i].health + '</span>');
+
+                        console.log($fighters);
+
+                        $(".fighters").append($fighters);
+                    }
+
+                }
+
+
+                $(".jedi").on('click', function () {
+                    //                  console.log(this.getAttribute('jedi-id'));
+                    //                    
+
+                    if (this.getAttribute('jedi-id') == '0') {
+                        
+
+                        var $fighters = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', i).html('<span>' + combatant[0].name + '</span><img src=./assets/images/' + combatant[0].image + ' class="img-responsive">' + '<span>' + combatant[0].health + '</span>');
+                        
+                      
+
+                        console.log($fighters);
+
+                        $(".yourCharacter").append($fighters);
+
+                        combatant[0].status = 'unavailable'
+                        displayJedi();
+//                        setCharacter();
+
+
+                    }
+                    if (this.getAttribute('jedi-id') == '1') {
+                        
+                         var $fighters = $("<div/>").addClass("jedi col-md-2").attr('jedi-id', i).html('<span>' + combatant[1].name + '</span><img src=./assets/images/' + combatant[1].image + ' class="img-responsive">' + '<span>' + combatant[1].health + '</span>');
+                        
+                      
+                        console.log($fighters);
+
+                        $(".yourCharacter").append($fighters);
+                        
 
 
 
+                        combatant[1].status = 'unavailable'
+                        displayJedi();
+//                       
+                    }
+                    if (this.getAttribute('jedi-id') == '2') {
 
 
+                        combatant[2].status = 'unavailable'
+                        displayJedi();
+                    }
+                    if (this.getAttribute('jedi-id') == '3') {
 
 
+                        combatant[3].status = 'unavailable'
+                        displayJedi();
+                    }
 
+                })
+            }
+
+            displayJedi();
 
         })
     </script>
