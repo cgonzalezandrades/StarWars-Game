@@ -17,6 +17,11 @@ body {
 
 .row{
     padding-left: 10px;
+    
+}
+
+.header{
+    padding-left: 25px;
 }
 
 
@@ -30,7 +35,7 @@ body {
     padding: 0;
 }
 
-.col-sm-3 {
+.jedi {
 
     border: solid green;
     background-color: aliceblue;
