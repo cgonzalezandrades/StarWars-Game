@@ -6,9 +6,10 @@ var attackerIndex = 0;
 var defender = [];
 var defenderIndex = 0;
 var combatant = new Array(4);
-combatant[0] = new jedi('Obi Wan', 'obiWan.png', 130, 6, 0, 'false');
-combatant[1] = new jedi('Luke Skywalker', 'luke.jpg', 100, 12, 0, 'false');
-combatant[2] = new jedi('Darth Sidious', 'darthSidious.jpeg', 150, 10, 0, 'false');
+var countWin = 0;
+combatant[0] = new jedi('Obi Wan', 'obiWan.png', 120, 8, 0, 'false');
+combatant[1] = new jedi('Luke Skywalker', 'luke.jpg', 100, 5, 0, 'false');
+combatant[2] = new jedi('Darth Sidious', 'darthSidious.jpeg', 150, 20, 0, 'false');
 combatant[3] = new jedi('Darth Vader', 'darthVader.jpg', 180, 25, 0, 'false');
 
 function jedi(name, image, health, attack, counter, chosen, state) {
@@ -33,7 +34,6 @@ $(document).ready(function () {
 
 
             combatant[index].status = 'unavailable'
-                //  attackerChosen = true;
             combatant[index].state = true;
             attackerIndex = index;
             attacker[index] = combatant[index];
@@ -70,7 +70,6 @@ $(document).ready(function () {
             var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', index).html('<span>' + combatant[index].name + '</span><img src=./assets/images/' + combatant[index].image + ' class="img-responsive">' + '<span>' + combatant[index].health + '</span>');
 
         combatant[index].status = 'unavailable'
-            //  defenderChosen = true;
         combatant[index].state = true;
         defenderIndex = index;
         defender[index] = combatant[index];
@@ -142,7 +141,6 @@ $(document).ready(function () {
                     if (!defenderChosen) {
                         setDefender(0)
                     }
-
                 }
 
                 if (this.getAttribute('jedi-id') == '1') {
@@ -158,6 +156,7 @@ $(document).ready(function () {
                         setDefender(2)
                     }
                 }
+
                 if (this.getAttribute('jedi-id') == '3') {
 
                     if (!defenderChosen) {
@@ -172,217 +171,107 @@ $(document).ready(function () {
 
                         $(".yourCharacter").empty();
 
-                        console.log("attacker health is " + attacker[attackerIndex].health);
-                        console.log("attacker attack is " + attacker[attackerIndex].attack);
-
-                        console.log("defender health " + defender[defenderIndex].health);
-                        console.log("defender attack is " + defender[defenderIndex].attack);
+                        attacker[attackerIndex].counter = attacker[attackerIndex].counter + attacker[attackerIndex].attack;
 
                         attacker[attackerIndex].health = attacker[attackerIndex].health - defender[defenderIndex].attack;
 
-                        console.log("attacker health is " + attacker[attackerIndex].health);
-                        console.log("attacker attack is " + attacker[attackerIndex].attack);
-
-                        console.log("------------------------------");
-
-                        defender[defenderIndex].health = defender[defenderIndex].health - attacker[attackerIndex].attack;
-
-                        console.log("defender health " + defender[defenderIndex].health);
-                        console.log("defender attack is " + defender[defenderIndex].attack);
+                        defender[defenderIndex].health = defender[defenderIndex].health - attacker[attackerIndex].counter;
 
                         var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive">' + '<span>' + attacker[attackerIndex].health + '</span>');
 
                         $(".yourCharacter").append($attackers);
 
 
-
                         $(".defender").empty();
-
 
                         var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', defenderIndex).html('<span>' + defender[defenderIndex].name + '</span><img src=./assets/images/' + defender[defenderIndex].image + ' class="img-responsive">' + '<span>' + defender[defenderIndex].health + '</span>');
 
-
                         $(".defender").append($defenders);
 
-                        $(".action1").html("you attacked " + defender[defenderIndex].name + " for " + attacker[attackerIndex].attack);
+                        $(".action1").html("you attacked " + defender[defenderIndex].name + " for " + attacker[attackerIndex].counter);
                         $(".action2").html(defender[defenderIndex].name + " attack you back for " + defender[defenderIndex].attack + " Damage ");
 
-                        attacker[attackerIndex].attack = attacker[attackerIndex].attack + attacker[attackerIndex].attack;
 
                         if (attacker[attackerIndex].health <= 0) {
 
+                            if (attacker[attackerIndex].health < defender[defenderIndex].health) {
 
-                            $(".action1").html("Game Over, you have been defeated");
+                                $(".action1").html("Game Over, you have been defeated");
 
-                            $(".attack").prop("disabled", true);
+                                $(".attack").prop("disabled", true);
 
-                            var $restartButton = $("<button/>").addClass("restart").html('<button>').text("Restart");
+                                var $restartButton = $("<button/>").addClass("restart").html('<button>').text("Restart");
 
-                            $(".action2").empty();
+                                $(".action2").empty();
 
-                            $(".action2").append($restartButton);
+                                $(".action2").append($restartButton);
 
-                            $(".action2").on("click", function () {
-                                location.reload();
+                                $(".action2").on("click", function () {
+                                    location.reload();
 
-                            })
+                                })
+                            }
                         }
 
                         if (defender[defenderIndex].health <= 0) {
+                            countWin++;
 
                             $(".defender").empty();
                             $(".action1").empty()
                             $(".action2").empty()
+                            $(".attack").prop("disabled", true);
 
-                            $(".action1").html("You have defeated " + attacker[attackerIndex].name + ", you can choose to fight another enemy");
+                            if (countWin < combatant.length - 1) {
 
+                                $(".action1").html("You have defeated " + defender[defenderIndex].name + ", you can choose to fight another enemy");
 
+                            }
 
+                            if (countWin >= (combatant.length - 1)) {
 
-//                            $(".jedi").on('click', function () {
-//
-//                                if (this.getAttribute('jedi-id') == '0') {
-//
-//                                    displayJedi();
-//
-//                                    if (!attackerChosen) {
-//                                        setCharacter(0);
-//                                    }
-//
-//                                }
-//
-//                                if (this.getAttribute('jedi-id') == '1') {
-//
-//                                    displayJedi();
-//
-//                                    if (!attackerChosen) {
-//                                        setCharacter(1);
-//                                    }
-//
-//                                }
-//
-//                                if (this.getAttribute('jedi-id') == '2') {
-//
-//
-//                                    displayJedi();
-//                                    if (!attackerChosen) {
-//                                        setCharacter(2);
-//                                    }
-//                                }
-//
-//                                if (this.getAttribute('jedi-id') == '3') {
-//
-//                                    displayJedi();
-//                                    if (!attackerChosen) {
-//                                        setCharacter(3);
-//                                    }
-//
-//                                }
-//
-//                                $(".jedi").on('click', function () {
-//                                    if (this.getAttribute('jedi-id') == '0') {
-//
-//                                        if (!defenderChosen) {
-//                                            setDefender(0)
-//                                        }
-//
-//                                    }
-//
-//                                    if (this.getAttribute('jedi-id') == '1') {
-//
-//                                        if (!defenderChosen) {
-//                                            setDefender(1)
-//                                        }
-//                                    }
-//
-//                                    if (this.getAttribute('jedi-id') == '2') {
-//
-//                                        if (!defenderChosen) {
-//                                            setDefender(2)
-//                                        }
-//                                    }
-//                                    if (this.getAttribute('jedi-id') == '3') {
-//
-//                                        if (!defenderChosen) {
-//                                            setDefender(3)
-//                                        }
-//                                    }
-//
-//                                    $(".attack").on('click', function () {
-//
-//
-//                                        if ((attacker[attackerIndex].state === true) && (defender[defenderIndex].state === true)) {
-//
-//                                            $(".yourCharacter").empty();
-//
-//                                            console.log("attacker health is " + attacker[attackerIndex].health);
-//                                            console.log("attacker attack is " + attacker[attackerIndex].attack);
-//
-//                                            console.log("defender health " + defender[defenderIndex].health);
-//                                            console.log("defender attack is " + defender[defenderIndex].attack);
-//
-//                                            attacker[attackerIndex].health = attacker[attackerIndex].health - defender[defenderIndex].attack;
-//
-//                                            console.log("attacker health is " + attacker[attackerIndex].health);
-//                                            console.log("attacker attack is " + attacker[attackerIndex].attack);
-//
-//                                            console.log("------------------------------");
-//
-//                                            defender[defenderIndex].health = defender[defenderIndex].health - attacker[attackerIndex].attack;
-//
-//                                            console.log("defender health " + defender[defenderIndex].health);
-//                                            console.log("defender attack is " + defender[defenderIndex].attack);
-//
-//                                            var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive">' + '<span>' + attacker[attackerIndex].health + '</span>');
-//
-//                                            $(".yourCharacter").append($attackers);
-//
-//
-//
-//                                            $(".defender").empty();
-//
-//
-//                                            var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', defenderIndex).html('<span>' + defender[defenderIndex].name + '</span><img src=./assets/images/' + defender[defenderIndex].image + ' class="img-responsive">' + '<span>' + defender[defenderIndex].health + '</span>');
-//
-//
-//                                            $(".defender").append($defenders);
-//
-//                                            $(".action1").html("you attacked " + defender[defenderIndex].name + " for " + attacker[attackerIndex].attack);
-//                                            $(".action2").html(defender[defenderIndex].name + " attack you back for " + defender[defenderIndex].attack + " Damage ");
-//
-//                                            attacker[attackerIndex].attack = attacker[attackerIndex].attack + attacker[attackerIndex].attack;
-//
-//                                            if (attacker[attackerIndex].health <= 0) {
-//
-//
-//                                                $(".action1").html("Game Over, you have been defeated");
-//
-//                                                $(".attack").prop("disabled", true);
-//
-//                                                var $restartButton = $("<button/>").addClass("restart").html('<button>').text("Restart");
-//
-//                                                $(".action2").empty();
-//
-//                                                $(".action2").append($restartButton);
-//
-//                                                $(".action2").on("click", function () {
-//                                                    location.reload();
-//
-//                                                })
-//                                            }
-//
-//
-//
-//
-//
-//                                        }
-//                                    })
-//                                })
-//                            })
+                                $(".yourCharacter").empty();
 
+                                var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive">' + '<span>' + "Winner" + '</span>');
 
+                                $(".yourCharacter").append($attackers);
+
+                                $(".action1").html("GAME OVER.......... YOU WON");
+
+                            }
+
+                            $(".jedi").on('click', function () {
+                                $(".attack").prop("disabled", false);
+
+                                if (this.getAttribute('jedi-id') == '0') {
+
+                                    if (!defenderChosen) {
+                                        setDefender(0)
+                                    }
+
+                                }
+
+                                if (this.getAttribute('jedi-id') == '1') {
+
+                                    if (!defenderChosen) {
+                                        setDefender(1)
+                                    }
+                                }
+
+                                if (this.getAttribute('jedi-id') == '2') {
+
+                                    if (!defenderChosen) {
+                                        setDefender(2)
+                                    }
+                                }
+
+                                if (this.getAttribute('jedi-id') == '3') {
+
+                                    if (!defenderChosen) {
+                                        setDefender(3)
+                                    }
+                                }
+                            })
                         }
-
                     }
                 })
             })
