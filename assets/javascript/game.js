@@ -7,10 +7,10 @@ var defender = [];
 var defenderIndex = 0;
 var combatant = new Array(4);
 var countWin = 0;
-combatant[0] = new jedi('Obi Wan', 'obiWan.png', 120, 8, 0, 'false');
+combatant[0] = new jedi('obi Wan', 'obiWan.png', 120, 8, 0, 'false');
 combatant[1] = new jedi('Luke Skywalker', 'luke.jpg', 100, 5, 0, 'false');
 combatant[2] = new jedi('Darth Sidious', 'darthSidious.jpeg', 150, 20, 0, 'false');
-combatant[3] = new jedi('Darth Vader', 'darthVader.jpg', 180, 25, 0, 'false');
+combatant[3] = new jedi('Darth vader', 'darthVader.jpg', 180, 25, 0, 'false');
 
 function jedi(name, image, health, attack, counter, chosen, state) {
     this.name = name;
@@ -24,13 +24,16 @@ function jedi(name, image, health, attack, counter, chosen, state) {
 }
 
 $(document).ready(function () {
+      var audio = new Audio();
+                    audio.src = "assets/starwarssong.mp3"
+                    audio.play();
 
     function setCharacter(index) {
         $(".fighters").empty();
 
         if (combatant[index].status === 'available') {
 
-            var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', index).html('<span>' + combatant[index].name + '</span><img src=./assets/images/' + combatant[index].image + ' class="img-responsive">' + '<span>' + combatant[index].health + '</span>');
+            var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', index).html('<span>' + combatant[index].name + '</span><img src=./assets/images/' + combatant[index].image + ' class="img-responsive img-rounded">' + '<span>' + combatant[index].health + '</span>');
 
 
             combatant[index].status = 'unavailable'
@@ -54,7 +57,7 @@ $(document).ready(function () {
 
             if (combatant[i].status === 'available') {
 
-                var $fighters = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', i).html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive">' + '<span>' + combatant[i].health + '</span>').css('border', 'solid black').css('background-color', 'red');
+                var $fighters = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', i).html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive img-rounded">' + '<span>' + combatant[i].health + '</span>').css('border', 'solid black').css('background-color', 'rgba(172, 34, 44, 0.5)');
 
                 $(".enemiesAvailable").append($fighters);
             }
@@ -67,7 +70,7 @@ $(document).ready(function () {
 
         if (combatant[index].status === 'available')
 
-            var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', index).html('<span>' + combatant[index].name + '</span><img src=./assets/images/' + combatant[index].image + ' class="img-responsive">' + '<span>' + combatant[index].health + '</span>');
+            var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', index).html('<span>' + combatant[index].name + '</span><img src=./assets/images/' + combatant[index].image + ' class="img-responsive img-rounded">' + '<span>' + combatant[index].health + '</span>');
 
         combatant[index].status = 'unavailable'
         combatant[index].state = true;
@@ -87,7 +90,7 @@ $(document).ready(function () {
 
             if (combatant[i].status === 'available') {
 
-                var $fighters = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', i).html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive">' + '<span>' + combatant[i].health + '</span>');
+                var $fighters = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', i).html('<span>' + combatant[i].name + '</span><img src=./assets/images/' + combatant[i].image + ' class="img-responsive img-rounded">' + '<span>' + combatant[i].health + '</span>');
 
                 $(".fighters").append($fighters);
             }
@@ -96,6 +99,7 @@ $(document).ready(function () {
 
 
         $(".jedi").on('click', function () {
+            
 
             if (this.getAttribute('jedi-id') == '0') {
 
@@ -166,6 +170,10 @@ $(document).ready(function () {
 
                 $(".attack").on('click', function () {
 
+                    var audio = new Audio();
+                    audio.src = "assets/Lightsaber.mp3"
+                    audio.play();
+
 
                     if ((attacker[attackerIndex].state === true) && (defender[defenderIndex].state === true)) {
 
@@ -177,14 +185,14 @@ $(document).ready(function () {
 
                         defender[defenderIndex].health = defender[defenderIndex].health - attacker[attackerIndex].counter;
 
-                        var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive">' + '<span>' + attacker[attackerIndex].health + '</span>');
+                        var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive img-rounded">' + '<span>' + attacker[attackerIndex].health + '</span>');
 
                         $(".yourCharacter").append($attackers);
 
 
                         $(".defender").empty();
 
-                        var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', defenderIndex).html('<span>' + defender[defenderIndex].name + '</span><img src=./assets/images/' + defender[defenderIndex].image + ' class="img-responsive">' + '<span>' + defender[defenderIndex].health + '</span>');
+                        var $defenders = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', defenderIndex).html('<span>' + defender[defenderIndex].name + '</span><img src=./assets/images/' + defender[defenderIndex].image + ' class="img-responsive img-rounded">' + '<span>' + defender[defenderIndex].health + '</span>');
 
                         $(".defender").append($defenders);
 
@@ -196,11 +204,11 @@ $(document).ready(function () {
 
                             if (attacker[attackerIndex].health < defender[defenderIndex].health) {
 
-                                $(".action1").html("Game Over, you have been defeated");
+                                $(".action1").html("Game over, you have been defeated");
 
                                 $(".attack").prop("disabled", true);
 
-                                var $restartButton = $("<button/>").addClass("restart").html('<button>').text("Restart");
+                                var $restartButton = $("<button/>").addClass("restart").html('<button>').text("Restart").css('color', 'black');
 
                                 $(".action2").empty();
 
@@ -231,11 +239,11 @@ $(document).ready(function () {
 
                                 $(".yourCharacter").empty();
 
-                                var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive">' + '<span>' + "Winner" + '</span>');
+                                var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive img-rounded">' + '<span>' + "Winner" + '</span>');
 
                                 $(".yourCharacter").append($attackers);
 
-                                $(".action1").html("GAME OVER.......... YOU WON");
+                                $(".action1").html("game over.......... YOU WON");
 
                             }
 

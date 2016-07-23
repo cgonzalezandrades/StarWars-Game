@@ -1,10 +1,23 @@
 
+    @font-face{
+    font-family:starwars;
+    src: url(../Starjedi.ttf);
+}
 body {
-    background-image: url(../images/starWars.jpg);
+    background-image: url(../images/starwars3.jpg);
     background-color: black;
     background-repeat: no-repeat;
     background-size: 100% auto;
 /*    background-position: 30% 20%;*/
+    
+    font-family: starwars,sans-serif;
+    font-size: 1em;
+    
+}
+
+.jedi{
+  font-size: 1em;
+    color: black;
 }
 
 .container {
@@ -22,13 +35,28 @@ body {
 
 .header{
     padding-left: 25px;
+
+}
+
+.directions{
+    font-size: 2em;
+    color: white;
+    text-shadow: 1px 0 black, 0 1px black, 1px 0 black,0 -1px black;
+}
+
+.attack{
+    color: black;
+    
 }
 
 
 
 .rpg {
     margin-top: -30px;
-    font-size: 3em;
+    font-size: 5em;
+    color: white;
+    text-shadow: 1px 0 black, 0 1px black, 1px 0 black,0 -1px black;
+    
 }
 
 .col-lg-8{
@@ -37,8 +65,8 @@ body {
 
 .jedi {
 
-    border: solid green;
-    background-color: aliceblue;
+    border: solid black;
+    background-color: rgba(255,255,255,0.7);
     text-align: center;
 }
 
