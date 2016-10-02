@@ -25,8 +25,8 @@ function jedi(name, image, health, attack, counter, chosen, state) {
 
 $(document).ready(function () {
       var audio = new Audio();
-                    audio.src = "assets/starwarssong.mp3"
-                    audio.play();
+                    // audio.src = "assets/starwarssong.mp3"
+                    // audio.play();
 
     function setCharacter(index) {
         $(".fighters").empty();
@@ -185,7 +185,10 @@ $(document).ready(function () {
 
                         defender[defenderIndex].health = defender[defenderIndex].health - attacker[attackerIndex].counter;
 
-                        var $attackers = $("<div/>").addClass("jedi col-sm-3").attr('jedi-id', attackerIndex).html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive img-rounded">' + '<span>' + attacker[attackerIndex].health + '</span>');
+                        var $attackers = $("<div/>")
+                        .addClass("jedi col-sm-3")
+                        .attr('jedi-id', attackerIndex)
+                        .html('<span>' + attacker[attackerIndex].name + '</span><img src=./assets/images/' + attacker[attackerIndex].image + ' class="img-responsive img-rounded">' + '<span>' + attacker[attackerIndex].health + '</span>');
 
                         $(".yourCharacter").append($attackers);
 
@@ -232,7 +235,6 @@ $(document).ready(function () {
                             if (countWin < combatant.length - 1) {
 
                                 $(".action1").html("You have defeated " + defender[defenderIndex].name + ", you can choose to fight another enemy");
-
                             }
 
                             if (countWin >= (combatant.length - 1)) {
@@ -244,7 +246,6 @@ $(document).ready(function () {
                                 $(".yourCharacter").append($attackers);
 
                                 $(".action1").html("game over.......... YOU WON");
-
                             }
 
                             $(".jedi").on('click', function () {
@@ -255,7 +256,6 @@ $(document).ready(function () {
                                     if (!defenderChosen) {
                                         setDefender(0)
                                     }
-
                                 }
 
                                 if (this.getAttribute('jedi-id') == '1') {
