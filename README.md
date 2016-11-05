@@ -1,1 +1,1 @@
-# week-4-game
+# StarWars Game built with JavaScript.
